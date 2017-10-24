@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    title Enter some info, my dude!
+
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+
+    //jquery
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+
+    //Bootstrap
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+
+    //Submission scripts
+    script(src="/submit.js")
+
+  body
+    div.jumbotron
+      h1 Welcome to my super simple database!
+    div.row
+      div.container
+        h2 Send a message!
+        form(id = "add-msg")
+          input(type = "text", name = "shout" value = "Napoleon did nothing wrong!")
+          input(type = "submit", value = "add")
+    h1 Here are the contents of the database!
+    ul
+      each i in data
+        li
+          div.well-lg
+            p= i
+      else
+        li There is nothing here.
