@@ -137,7 +137,7 @@ function getMsges(res, next) {
         output = [];
       }
       else {
-        output = []; //Not sure if this whole putting it into an output array thing is necessary tbh
+        output = []; //Not sure if this whole putting it into an output array thing is necessary
         var i = 0
         data.forEach(function(item) {
             output[i] = item;
@@ -184,7 +184,13 @@ app.put('/add', function(req, res) {
   addMsg(res, message, function(data) {
     console.log("AddMsg has successfully called back")
     console.log(data)
-    location.reload();
+    getMsges(res, function(out) {
+      console.log("GET MSGS CALLBACK");
+      console.log(out);
+      load.make(res, out, function() {
+        console.log("Page created!");
+      });
+    });
   });
 });
 
@@ -198,7 +204,13 @@ app.get('/DELETE-ERYTHIGN', function(req, res) {
     }
     else {
       console.log("You have successfuly DELETED EVERYTHGING!@!!!1!!");
-      location.reload();
+      getMsges(res, function(out) {
+        console.log("GET MSGS CALLBACK");
+        console.log(out);
+        load.make(res, out, function() {
+          console.log("Page created!");
+        });
+      });
     }
   });
 
