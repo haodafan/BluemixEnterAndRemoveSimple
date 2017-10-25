@@ -84,6 +84,14 @@ connection.connect(function(err) {
             else {
               console.log("Table has been created.");
               databaseExists = true;
+              console.log("DATABASE EXISTS!");
+              getMsges(res, function(data) {
+                console.log("GET MSGS CALLBACK");
+                console.log(data);
+                load.make(res, data, function() {
+                  console.log("Page created!");
+                });
+              });
             }
           });
         //});
@@ -96,9 +104,10 @@ connection.connect(function(err) {
 // MODULAR HELPER FUNCTIONS ----------------------------------------------------
 function addMsg(res, msg, next) {
   console.log("addMsg() has been invoked.");
-  var newQuery = "INSERT INTO Shouts(name, shout) VALUES ('Some guy','" + msg + "');"
+  var newQuery = "INSERT INTO Shouts(name, shout) VALUES ('Some guy','"+ msg +"');"
+
   console.log("Query: '" + newQuery +"'");
-  connection.query(newQuery, function(err, data) {
+  connection.query(newQuery, function(err, data, fields) {
     if (err) {
       res.status(500).send(err);
       console.log(err)
@@ -107,7 +116,7 @@ function addMsg(res, msg, next) {
       console.log("Query success! ");
       next(data);
     }
-  })
+  });
 }
 
 function getMsges(res, next) {
@@ -116,21 +125,22 @@ function getMsges(res, next) {
   console.log("Query: '" + newQuery +"'");
 
   var output;
-  connection.query(newQuery, function(err, data) {
+  connection.query(newQuery, function(err, data, fields) {
     if (err) {
       console.log(err);
       res.status(500).send(err);
     }
     else {
-      console.log("Query response: " + data);
+      console.log("Query response: ");
+      console.log(data);
       if (/*data === undefined ||*/ data === null || data === [] || data === '') {
         output = [];
       }
       else {
-        output = [];
+        output = []; //Not sure if this whole putting it into an output array thing is necessary tbh
         var i = 0
         data.forEach(function(item) {
-            output[i] = item.ID;
+            output[i] = item;
             i++;
         });
       }
@@ -153,7 +163,7 @@ app.get('/', function(req, res) {
       console.log(data);
       load.make(res, data, function() {
         console.log("Page created!");
-      })
+      });
     });
   }
   else {
@@ -174,7 +184,24 @@ app.put('/add', function(req, res) {
   addMsg(res, message, function(data) {
     console.log("AddMsg has successfully called back")
     console.log(data)
+    location.reload();
   });
+});
+
+app.get('/DELETE-ERYTHIGN', function(req, res) {
+  console.log("routed from DELETEJAL EVRYTHGNGN!!!!! D:");
+
+  connection.query("DELETE FROM Shouts;", function(err, data, fields) {
+    if (err) {
+      res.status(500).send(err);
+      console.log(err)
+    }
+    else {
+      console.log("You have successfuly DELETED EVERYTHGING!@!!!1!!");
+      location.reload();
+    }
+  });
+
 });
 
 

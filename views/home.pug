@@ -25,11 +25,13 @@ html
         form(id = "add-msg")
           input(type = "text", name = "shout" value = "Napoleon did nothing wrong!")
           input(type = "submit", value = "add")
+        h4
+          a(href = "/DELETE-ERYTHIGN") I WANT THESE THINGS GONE!!!!!!!!!!!!!!!!!!!
     h1 Here are the contents of the database!
     ul
       each i in data
         li
           div.well-lg
-            p= i
+            p= i.shout
       else
         li There is nothing here.

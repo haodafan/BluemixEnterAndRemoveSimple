@@ -1,9 +1,11 @@
 $(document).ready(function() {
+  /*
   function reload() {
     $.get('/', function(date) {
       console.log("Reloaded!");
     });
   }
+  */
 
   $('#add-msg').submit(function(e) {
     e.preventDefault();
@@ -11,11 +13,11 @@ $(document).ready(function() {
     $.ajax({
       url: '/add',
       type: 'PUT',
-      data: $(this).serialize(),
+      data: $(this).serialize() /*,
       success: function(data) {
         console.log(data);
         reload();
-      }
+      }*/
     });
   });
 });
